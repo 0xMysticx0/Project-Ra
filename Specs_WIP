@@ -1,0 +1,66 @@
+REWARD TOKEN INTRODUCTION
+
+Reward token of RA will be called [Eye of Ra] ($RA). It has an unlimited emissions schedule, but follows an algorithmic reduction such that over the long term it approximates a max supply. The token also doubles as a governance share and entitles the holder to profit-share in the platform.
+
+RA VAULTS
+
+Ra is essentially a yield aggregator not unlike Auto or Beefy. The core of the vault strategies are essentially auto-compounding the underlying assets by 'vamping' another platform by dumping their native tokens to further autocompound. We will essentially start with the most popular and safer platforms such as Pancakeswap and Auto. On top of doing so, we also offer $RA.
+
+VAULT - Platform Fees
+
+Each vault has a deposit fee of [1]%. This fee applies to every entry into the vault, so it also includes both the initial entry and further autocompounding actions. In other words, the platform charges the fee for both deposits and profits. [An additional 0.01% fee is charged for gas, if required?]
+
+VAULT - Extra APY
+
+Every vault comes also with an [APY BOOST] feature. This feature is switched on by default and will autodump $RA rewards into the underlying asset.
+
+VAULT - Multipliers
+
+Every vault also comes with a multiplier feature. Starting with 1x, this multiplier increases by +0.1x every 24 hours to a max of +9x (total of 10x) over 90 days. The multiplier works on a weighted average basis, which means unlike the vanilla AMPL geysers, withdrawals do not affect the multipliers in any way. Every new deposit (whether manually by the user or automagically via autocompound) will reduce the multiplier as it will be weighted.
+
+As an example, a user has $100 of Cake-BNB held for 10 days giving a multiplier of 2x. They then deposit another new $100 of Cake-BNB. Conceptually, the old $100 LP benefits from the 2x but the new $100 LP benefits only from 1x. Mathematically this is expressed by applying a weighted average multiplier such that it now has a 1.5x multiplier on both. The frontend UI will also have a tooltip on this carefully explaining this feature to the user. 
+
+Technically, this muliplier will simply function as a TVL amplifier. IE., the emissions allocated to the overall vault strategy remains the same, just that users with higher multipliers get a bigger slice of the pie than their superficial TVL deposited would allow based on the multiplier, incentivizing long-term holding while sweetening the cost of the deposit/profit fees.
+
+VAULT - Other Comments (Day 2+ features)
+
+While there will be the usual boring vaults that are vamping their respective platforms, we should allow ourselves the flexibility to implement vault strategies not unlike ValueDefi and Yearn. One idea that comes into mind would be specialized CAKE strategies, ranging from:
+a) From APY seeking Cake strategies utilizing the SYRUP pool which seeks the highest APY Syrup pool to dump into more CAKE
+b) To a strategy utilizing the abnormally high APY's of PANCAKEBUNNY while minimizing the withdrawal fee risk and/or abnormally high gas
+
+To be implemented in the future as well would be enabling Vault Collateralization like RAMP DEFI, and following which leveraged yield farming can also follow. All these features will form additional functionalities in the ecosystem will also providing revenue sources for profit sharing.
+
+THE ZAP
+
+First engineered by yearn.finance (ERC20) and now also used by PancakeBunny (BEP20), this algorithm allows is a convenient solution to convert BNB into any liquidity pair in one click. Our platform will offer this functionality as an additional feature in the farm, but also have customized one-click buttons for this algorithm next to each vault to allow for easy and convenient front-end entry without requiring users to separately move into other AMM / DEX platforms to interact with our platform. At the same time, our vaults can also utilize this function (where necessary). The platform will also take a small fee from the use of this feature which will go to the [GOVERNANCE FUND]. For both BNB->LP and LP->BNB zaps, a small % of the resulting LP will be charged as Zap fees and transferred into the [GOVERNANCE FUND].
+
+RA TOKENOMICS
+
+While the [APY BOOST] feature acts as continual sell pressure on $RA, the value of the reward token itself is backed by fees accumulated by the platform in the form of the [GOVERNANCE FUND]. Every vault strategy offered on the platform charges a [1]% deposit and profit fee, but unlike other platforms where the LP's are broken up and sold for BNB, we instead keep the LP's locked indefinitely in a [DIVIDEND FUND]. Taking for example Cake-BNB PCS LP, the [GOVERNANCE FUND] then holds the LP indefinitely while dumping the Cake rewards into BNB [technical?: every time their respective vaults autocompounds]. All the BNB gathered in such a way is considered to be the amounts attributable to the [DIVIDEND FUND].
+
+$RA holders can stake their $RA in the [BOARDROOM] (technical: snapshot.org style in terms of backend, frontend to be customized). Governance feature is typical, granting 1 voting power to each $RA token, to be applied fractionally as well. The functionalities of the governance aspect is expected to be modelled after https://docs.venus.io/docs/governance#introduction. We expect this aspect to be a Day 2+ feature rather than a Day 1 MVP. However, masterchef and vault contracts and/or time-lock contracts should be built with variability in mind to allow for flexibility from governance votes.
+
+At the same time, [BOARDROOM] stakers will earn BNB distributed from the [DIVIDEND FUND] accumulated by the [GOVERNANCE FUND]. Economically speaking, the VAULT MULTIPLIERS come into play here with the exact same mechanics to incentivize long-term boardroom staking. Commercially, this aspect of the [BOARDROOM] must be fully functional on Day 1 to immediately underpin the intrinsic value of $RA. However, we expect to not distribute on Day 1, but to allow the fund to accumulate during a bootstrap period before distributing. Exact numbers TBD.
+
+From a front-end perspective, we envision the boardroom page to be a separate tab from the vaults/farms, and may also have its own sub-tabs. One of the pages would be a dashboard showing the details of the [GOVERNANCE FUND] component assets, and [DISTRIBUTION FUND] APY's, etc. Details TBD.
+
+NFT / GAMIFICATION
+
+Could be a Day 1 or a Day 2+, depending on our timeline although they are non-essential. It would be interesting to build in functionality to allow NFT metadata to manipulate specific, some, or all vaults such as: increased max multiplier cap, increased multiplier rate, directly adding x multiplier to $y worth of assets, etc. At the onset, we hope to mint NFT's for OG's and early supporters, as well as fun NFT's (making full use of our crowd-sourced art assets) for various milestones. To be discussed in detail as well but to be considered non-essential for Day 1 development.
+
+TOKEN ALLOCATION / CIRCULATION
+
+A significant proportion of emissions will be allocated for the one and only native pair, the RA-TUT vault to incentivize liquidity. All entries and exits of RA, whether manually by users, via ZAP, or autocompound functions, will go through TUT. Before launch, there will be a LGE for RA using TUT (rather than BNB) which will set a solid liquidity floor for RA exits for the [APY BOOST] feature to work on day 1. Depending on how the liquidity floor of TUT-BNB / TUT-BTC / TUT-stable look like, we may have to also offer a TUT-stable vault as well. 
+
+Algorithmically enforced max supply: 7,777,777
+Emissions schedule: [tbu] per [tbu time period]
+LGE: [5]% of max supply (ie., pre-mined)
+
+DEV WALLET / TEAM WALLET
+
+To be negotiated and agreed. However, we expect roughly [30]% of economics to be allocated to a Foundation wallet which would be a multi-sig. Internally, [7]% would be as team equity while the remaining % would be for strategic / marketing / development / expense purposes. Economics can be applied in a few ways or a combination thereof:
+a) pre-mining the set % of RA
+b) allocating a set % of RA emissions as time goes by
+c) directly allocating a set % of [DIVIDEND FUND] distributions
+
+Treble Clef's preliminary view is to allocate a small pre-mined RA of [tbu]% as team equity, while also disclosing the appropriate wallets and attached identities for reassurance and transparency. Separately, a [tbu]% of [DIVIDEND FUND] distributions automatically flows into a multi-sig governance wallet which will function purely for the good of the project. We may allow governance at the end of every month to vote for a small distribution from these funds to the team as "bonus" if the community agrees; team equity from the pre-mined RA are to abstain from such voting (for easy tracking and audit trail for the community, there will be a fluff vote option called TEAM EQUITY for the team to use their votes on).
