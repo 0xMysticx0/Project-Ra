@@ -1,5 +1,5 @@
 
-> IDK how to get .md files to render LaTeX
+> IDK how to get .md files to render LaTeX. Copy-paste the .md into https://stackedit.io/app to see LaTeX rendered.
 
 # 1. Introduction
 
@@ -15,11 +15,44 @@ The Token bestows both governance and profit-sharing privileges to the holder by
 
 ## 2.1 Emission Schedule
 - Approximated max supply: 7,777,777 Tokens
-- [TBU] Emission schedule is expected to follow a sigmoid supply curve such that: 
+- Emission schedule is expected to follow a sigmoid supply curve such that: 
 
-$$y = \frac{1}{1 + e^{-x}}$$
+$$y = \frac{2*maxMint}{1 + e^{-x}}-1$$
 
-[***Technically possible without being 'costly'?*** ] Emissions will reduce on a per block basis algorithmically to minimize supply shocks.
+Where:
+- y = Tokens minted at any point in time
+- x = years (assuming 360 days per year)
+- maxMint = Max Tokens allocated for Reward Emissions
+
+### Supply Curve / Emissions Schedule for Reward Emissions (excl. pre-minted tokens)
+| Year | Tokens | % of maxMint | Minted | Y-o-y Emissions Reduction
+|--|--|--|--|--|
+| 0 | 0 | 0.00% | 0 | n/a
+| 1 | 2,695,683 | 46.21% | +2,695,683 | n/a
+| 2 | 4,442,632 | 76.16% | +1,746,949 | -35.19%
+| 3 | 5,280,031 | 90.51% | +837,399 | -52.07%
+| 4 | 5,623,494 | 96.40% | +343,463 | -58.98%
+| 5 | 5,755,249 | 98.66% | +131,756 | -61.64%
+| 6 | 5,804,485 | 99.51% | +49,236 | -62.63%
+| 7 | 5,822,704 | 99.82% | +18,218 | -63.00%
+| 8 | 5,829,420 | 99.93% | +6,717 | -63.13%
+| 9 | 5,831,893 | 99.98% | +2,473 | -63.18%
+| 10 | 5,832,803 | 99.99% | +910 | -63.20%
+
+Emissions would follow the supply curve on a daily basis (24 hours / 28,800 blocks), with the per-block emissions being a linear average. Eg., day 1 emissions = 8,102 / 28,800 tokens per block for 24 hours, while day 200 emissions = 7,510 / 28,800 tokens per block for 24 hours.
+
+Formula to determine emissions per 28,800 blocks:
+
+$$z_1 = \frac{2*maxMint}{1 + e^{-\frac{x}{360}}}$$
+
+$$z_n = \frac{2*maxMint}{1 + e^{-\frac{x}{360}}}-\frac{2*maxMint}{1 + e^{-\frac{x-1}{360}}}$$
+
+Where:
+- z = Emissions for the nth set of 28,800 blocks; $z_0$ = 0
+- x = day count (assuming 28,800 block per day); $x_0$ = 0
+- maxMint = Max Tokens allocated for Reward Emissions
+
+After 10 years, we set the default case as flat emissions (ie., +910 per year), to be subject to governance voting.
 
 ## 2.2 Allocations
 
@@ -27,9 +60,9 @@ As the emissions schedule approximates a max supply, token allocation is possibl
 
 | Purpose | % of Max Supply | Minting Method |
 |--|--|--|
-| Reward Emissions | 75~88% | Emissions schedule |
-| RA-TUT LGE | 5~15% | Pre-minted |
-| Team Equity | 7~10% | Pre-minted [/ Partial vest?] |
+| Reward Emissions | 75% | Emissions schedule |
+| RA-TUT LGE | 15% | Pre-minted |
+| Team Equity | 10% | Pre-minted |
 
 # 3. Vault Overview
 
