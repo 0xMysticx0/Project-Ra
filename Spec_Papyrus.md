@@ -1,3 +1,4 @@
+
 > IDK how to get .md files to render LaTeX
 
 # 1. Introduction
@@ -18,6 +19,8 @@ The Token bestows both governance and profit-sharing privileges to the holder by
 
 $$y = \frac{1}{1 + e^{-x}}$$
 
+[***Technically possible without being 'costly'?*** ] Emissions will reduce on a per block basis algorithmically to minimize supply shocks.
+
 ## 2.2 Allocations
 
 As the emissions schedule approximates a max supply, token allocation is possible on a fully diluted basis. A small portion of the Token will be pre-minted and allocated on day 1 while the remainder will be minted according to the emission schedule.
@@ -26,7 +29,7 @@ As the emissions schedule approximates a max supply, token allocation is possibl
 |--|--|--|
 | Reward Emissions | 75~88% | Emissions schedule |
 | RA-TUT LGE | 5~15% | Pre-minted |
-| Team Equity | 7~10% | Pre-minted / Partial vest |
+| Team Equity | 7~10% | Pre-minted [/ Partial vest?] |
 
 # 3. Vault Overview
 
@@ -52,8 +55,9 @@ A one-click API of this function will be placed on the front-end for each vault 
 
 For the other direction of the zap, it is ideal that the API scans a list of LP tokens from the connected wallet and displays them automatically in a list. The user only then needs to decide whether to break up the LP tokens (and how much) into their constituent tokens, or to "zap" them into their desired token (such as BNB). 
 
-In either case, an origination fee of [0.01]% is charged by the platform on the input token for a Token->LP zap. 
-[***Fee structure on the reverse direction zap is pending***]
+In either case, an origination fee of [0.6]% is charged by the platform on the input token for a Token->LP zap. 
+
+No fees will be charged for the opposite direction.
 
 ## 3.3 Multipliers
 
@@ -77,6 +81,44 @@ This function is switched on by default and will require user interaction to tog
 
 [**Technically possible without too much effort?**] The user will also be able to select a % of rewards to be used for the Boost, with the remaining to be untouched and subject to manual harvesting.
 
+## 3.5 Emission Allocation
+
+Typical farms on BSC are run by an allocation point system that is iterative on the introduction of new farms which makes it gas-costly and inefficient to rebalance emissions on a macro scale. Instead, we balance it by categories to allow for manual tweaking.
+
+| Category | % of Emissions |
+|--|--|
+| Native | [50]% |
+| Non-native | [45]% |
+| Community Requests | [5]% |
+
+Within each category most of the vaults will then be allocated points that are local to that category and most likely be equal at 1x. There will be potentially higher rates for partnerships and promotional periods as well.
+
+> ### Comparable Farm Native Allocations
+> 
+> | Farm | Total Alloc | Pool | Alloc | % of Emissions |
+> |--|--|--|--|--|
+> | PCS | 54,626 | C-BNB | 4,000 | 7.32% |
+> | PCS | 54,626 | Cake | 13,656 | 25.00% |
+> | Auto | 2,876 | Auto-BNB | 1,500 | 52.16% |
+> | Ape | 12,933 | Bnn-BNB | 4,000 | 30.93% |
+> | Ape | 12,933 | Bnn-BUSD | 2,000 | 15.46% |
+> | Ape | 12,933 | Banana | 3,233 | 25.00% |
+> | Bakery | 1,600 | B-BNB | 30 | 1.87% |
+> | Bakery | 1,600 | B-BUSD | 8 | 0.5% |
+> | Bakery | 1,600 | Bake | 21 | 1.31% |
+> | Swamp | 9,910 | S-BNB | 1,000 | 10.09% |
+> | Swamp | 9,910 | S-BUSD | 1,000 | 10.09% |
+> | Swamp | 9,910 | Swamp | 4,500 | 45.41% |
+> | Goose | 20,300 | E-BNB | 6,000 | 29.56% |
+> | Goose | 20,300 | E-BUSD | 6,000 | 29.56% |
+> | Goose | 20,300 | Egg | [] | []% |
+> | 11 | 129,580 | 11-BNB | 60,000 | 46.30% |
+> | 11 | 129,580 | 11 | [] | []% |
+> 
+> *Note: Updated as of 5 May 2021. Some farms have additional native allocations which are excluded due to small size.*
+> 
+> On first glance, farms typically allocate 50-60% of emissions to native pools. However, for a few of them a significant amount is allocated to single staking which we do not need (as our single staking derives value from the Boardroom Fund). Based on the above survey, I recommend allocating 50% to natives.
+
 # 4. Governance 
 
 The governance feature is expected to be industry standard, granting 1 voting power to each $RA token, to be applied fractionally as well. The ultimate shape of this function is expected to be modelled after https://docs.venus.io/docs/governance#introduction. In the meantime, we expect to enact a barebones aspect that is still mostly developer-driven via snapshot.org style proposals and voting for Day 1 functionality. However, smart contracts should ideally be built with variability in mind to allow for flexibility from governance votes when this feature is fully built and decentralized.
@@ -87,7 +129,7 @@ This structure forms the basis of the intrinsic value backing the Token. Tokens 
 
 ## 5.1 Boardroom Fund
 
-The Boardroom Fund is a smart contract / wallet that holds a portfolio of assets, including both LP tokens and single tokens. Origination fees charged by the platform are essentially sent to the Boardroom Fund. Rather than breaking up or cashing in the underlying assets, the Boardroom Fund uses these assets to generate more yield externally, which will then be converted into BNB [***BNB or BUSD, to be decided by community***].
+The Boardroom Fund is a smart contract / wallet that holds a portfolio of assets, including both LP tokens and single tokens ("**Assets Under Management**" or "**AUM**"). Origination fees charged by the platform are essentially sent to the Boardroom Fund. Rather than breaking up or cashing in the underlying assets, the Boardroom Fund uses these assets to generate more yield externally, which will then be converted into BNB [***BNB or BUSD, to be decided by community***]. [***Internal: They should be programmed in a way to allow for contingency plans such as the PCS v1->v2 migration.*** ]
 
 *Example: $100,000 of Cake-BNB PCS-LP is deposited into the platform. The platform charges 1% origination fee, which is $1,000 of Cake-BN PCS-LP. This LP is sent to the Dividend Fund, where it is staked in PCS. Assuming a daily APR of 0.20%, the $2 worth of Cake is generated from this LP daily  which is converted into $2 worth of BNB. This amount is then distributed to the appropriate Strategic Fund and the Dividend Pool.* 
 
@@ -95,8 +137,8 @@ BNB generated this way is ring-fenced and are partially allocated to a fund that
 
 | Allocation | % of Yield Generated by Boardroom Fund |
 |--|--|
-| Strategic Fund | [30]% |
-| Dividend Pool | [70]% |
+| Strategic Fund | [20]% |
+| Dividend Pool | [80]% |
 
 ## 5.2 Strategic Fund
 
@@ -106,8 +148,78 @@ Usage of the funds will be for various marketing and development costs, listing 
 
 ## 5.3 Dividend Pool
 
+### 5.3.1 Dividend Distributions
+
 Distributions occur around a [weekly] cycle. Every [Sunday midnight], funds generated from the last [7 days] are collected and primed for distribution over the next [7 days], emitted equally per block.
+
+This function is expected to be activated from [Week 3] of the launch.
 
 *Example: In Week 1, $70 of funds are generated. In Week 2, $140 of funds are generated. In Week 3, $210 of funds are generated. $70 of funds will distributed equally per block throughout Week 2, $140 throughout Week 3, and $210 throughout Week 4.*
 
 Distributions are subject to a Multiplier system similar to the Vault Multiplier system. Therefore, while the total distributions at any point in time are fixed, each user's share of the funds will depend on their share of the total pool staked adjusted by their respective multipliers.
+
+### 5.3.2 Special Dividends
+
+The Boardroom Fund will have an initial AUM:TVL ratio ("**Special Dividend Ratio**" or "**SDR**") of [1]% (in line with the origination fees). This means that the benchmark US$ value of AUM in the Boardroom Fund would be at [1]% of the TVL in the platform. This AUM:TVL ratio will also be subject to governance adjustments in the future as the platform grows.
+
+[***Internal: To consider running this on a monthly cycle instead?*** ] The platform will calculate and display a 7-day Volume Weighted Average ("**7DVWA**") TVL as well as a 7DVWA AUM. At the end of every dividend cycle, 7DVWA-AUM exceeding the SDR of the 7DVWA-TVL will be liquidated and paid as dividends, such that the resulting 7DVWA-SDR remains at the set benchmark rate. If the SDR is below the benchmark ratio, nothing happens.
+
+[***Any thoughts?*** ] The order of liquidation would be from lowest APY to highest APY. This method not only cycles some capital back to governance holders, but also optimizes Governance Fund APY's in the form of this limited rebalancing. Alternatively, another liquidation strategy would be to liquidate from the 5 assets that have grown the most within the consideration period, pro-rata.
+
+This function is expected to be activated from [Week 5] of the launch.
+
+# A. Internal Analysis (WIP)
+
+## A.1 Pool Emission Allocations
+
+### Top 20 TVL PCS Pools (*As of 5 May 2021*)
+
+| # | Pool | APR | TVL (US$mm) | Alloc |
+|--|--|--|--|--|
+| 1 | Cake-BNB | 73.91% | 1,675 | 40x |
+| 1b | Cake | 91.01% | 4,630 | []x |
+| 2 | BUSD-BNB | 25.57% | 968 | 8x |
+| 3 | USDT-BUSD | 13.65% | 453 | 2x |
+| 4 | ETH-BNB | 13.73% | 451 | 2x |
+| 5 | BTCB-BNB | 15.05% | 412 | 2x |
+| 6 | USDT-BNB | 19.52% | 317 | 2x |
+| 7 | BTCB-BUSD | 23.6% | 131 | 1x |
+| 8 | Bunny-BNB | 26.27% | 118 | 1x |
+| 9 | UNI-BNB | 32.08% | 97 | 1x |
+| 10 | USDC-BUSD | 16.06% | 96 | 0.5x |
+| 11 | DOT-BNB | 32.78% | 94 | 1x |
+| 12 | VAI-BUSD | 17.44% | 89 | 0.5x |
+| 13 | DAI-BUSD | 17.48% | 88 | 05x |
+| 14 | Link-BNB | 35.98% | 86 | 1x |
+| 15 | UST-BUSD | 21.72% | 71 | 0.5x |
+| 16 | XRP-BNB | 47.01% | 66 | 1x |
+| 17 | XVS-BNB | 58.22% | 53 | 1x |
+| 18 | ALPHA-BNB | 65.36% | 47 | 1x |
+| 19 | ADA-BNB | 32.69% | 47 | 0.5x |
+| 20 | Alpaca-BNB | 71.34% | 43 | 1x |
+
+Roughly $10bn TVL total ($3.7bn excl. Cake & Cake-BNB). If we aim to chip off 2% of their non-native market share, that would be c.$74mm TVL, with roughly 20% APR (0.055% APRD) for the big chip pairs. Incentivizing these TVL to switch would require a) relatively quick origination fee payback, and b) superior stabilized APY's, ceteris paribus. If we assume that the use of yield agg's would mostly resolve (b), then native emission allocations would have to solve (a). Realistically, we would not blindly take the top 20 TVL pairs, and instead focus on the ones where we can pragmatically take TVL from. Analysis of other PCS/Goose clones have indicated that the most liquid pairs tend to be centered around the following big chips: BNB, BUSD, BTCB, ETH, DAI, USDC, DOT, CAKE. It is likely that we will focus on these farms as a start, in combination with our UFO-recommended projects such as NRV and BGOV.
+
+## A.2 Valuation
+
+[tbd]
+
+# B. Future Development (WIP)
+
+## B.1 Farm Collateral
+
+Where we allow vaults to be enabled as collateral. We can even offer two options when users enable their farm as collateral: a) minting a RA-native stablecoin, and b) leveraged yield farming. 
+
+Precedents for leveraged yield farming: Alpha, Alpaca, Bigfoot
+Precedents for lending protocols: Venus, Fortress
+Precedents for farm collateral: RampDefi
+
+## B.2 Specialized Cake Strategies
+
+### B.2.1 Syrup Optimizer Vault
+
+This vault iterates through all Syrup pools, and constantly finds the highest APR pool to stake in, converting the relevant syrup reward token back into Cake. Depending on gas and any other hidden fees, structure may change such as switching based on an average APR, or using an allocation of top 3 APR pools instead.
+
+### B.2.2 PCB Vault
+
+Pancakebunny currently has the best Cake APR, partly due to their fee structure supporting the price floor of Bunny. However, their 0.5% withdrawal fee (if withdrawn within 72 hours) makes autocompounding structures tricky, along with their abnormally high gas fees for harvesting. To check ValueDefi's Cake strategies to see how they deal and offset with this.
